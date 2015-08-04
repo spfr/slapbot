@@ -1,0 +1,13 @@
+{
+  "name": "slapbot",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "private": true,
+  "dependencies" : {
+  	 "express": "~4.13.3",
+  	 "body-parser": "~1.13.3"
+  }
+}
