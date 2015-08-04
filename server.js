@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({	extended: true }));
 // parameters sent with 
 app.post('/slapbot', function(req, res) {
 	var username = req.body.user_name;
-	var shouldslap = req.body.username;
+	var shouldslap = req.body.text;
 	if (shouldslap == undefined) {
 		res.status(400).send('Need a user to slap! DUUUH!');
 	} else {
