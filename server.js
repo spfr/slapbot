@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({	extended: true }));
 
 // POST http://localhost:8080/slapbot/
 // parameters sent with 
-app.post('/slapbot', function(req, res) {
+app.post('/slap', function(req, res, next) {
 	var username = req.body.user_name;
 	var shouldslap = req.body.text;
 	if (shouldslap == undefined) {
@@ -28,7 +28,7 @@ app.post('/slapbot', function(req, res) {
 
 		};
 
-		send(botPayload, function (error, status, body) {
+		send(botPayload, req.query.callback, function (error, status, body) {
 			if (error) {
 				return next(error);
 
@@ -44,8 +44,12 @@ app.post('/slapbot', function(req, res) {
 	}
 });
 
-function send (payload, callback) {
+function send (payload, webhook, callback) {
 	var path = process.env.INCOMING_WEBHOOK_PATH;
+	if (webhook != undefined) {
+		path = webhook;
+	}
+	console.log("Path: "+path);
 	var uri = 'https://hooks.slack.com/services' + path;
 
 	request({
