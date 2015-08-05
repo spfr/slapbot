@@ -15,6 +15,13 @@ app.use(bodyParser.urlencoded({	extended: true }));
 app.post('/slap', function(req, res, next) {
 	var username = req.body.user_name;
 	var shouldslap = req.body.text;
+	var callbackHookToken = req.query.callback;
+
+	if (callbackHookToken == undefined) {
+	 res.status(400).send({ error: 'Need the Incoming Hook Token to post back!' });	
+	 return;
+	}
+
 	if (shouldslap == undefined) {
 		res.status(400).send('Need a user to slap! DUUUH!');
 	} else {
