@@ -1,39 +1,59 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var request = require('request');
-
+var constants = require('./constants.js');
+var helpers = require('./helpers.js');
 var app = express();
 var port = process.env.PORT || 8080;
 
-app.use(bodyParser.urlencoded({	extended: true })); 
+app.use(bodyParser.urlencoded({extended: true})); 
 
 app.post('/slap', function(req, res, next) {
-  var username = req.body.user_name;
-  var shouldslap = req.body.text;
-  var callbackHookToken = req.query.callback;
-
-  if (callbackHookToken == undefined) {
-    res.status(400).send({ error: 'Need the Incoming Hook Token to post back!' });	
+  var userName = req.body.user_name;
+  var message = req.body.text;
+  var channel = req.body.channel_id;
+  var slapTarget = '';
+  var slapEmoji = '';
+  if (message) {
+    var items = message.split(' ');
+    if (items.length >= 2) {
+      slapTarget = items[0];
+      slapEmoji = helpers.validEmojiFormat(items[1]);
+    } else if (items.length === 1) {
+      slapTarget = items[0];
+      slapEmoji = helpers.DEFAULT_EMOJI;
+    } else {
+      res.status(400).send({error: constants.INVALID_INPUT});  
+      return;
+    }
+  } else {
+    res.status(400).send({error: constants.NO_INPUT});  
     return;
   }
 
-  if (shouldslap == undefined) {
-    res.status(400).send('Need a user to slap! DUUUH!');
-  } else {
-    var botPayload = {
-      'text': username + ' slaps ' + shouldslap + ' around a bit with a large trout! :fish: ',
-      'username': 'slapbot',
-      'channel': req.body.channel_id,
-      'icon_emoji': ':fish:'
-    };
-    send(botPayload, req.query.callback, function (error, status, body) {
-      if (error) {
-        return next(error);
-      } else if (status !== 200) {
-        return next(new Error('Incoming WebHook: ' + status + ' ' + body));
-      }
-    });
+  var callbackHookToken = req.query.callback;
+  if (callbackHookToken == undefined) {
+    res.status(400).send({error: constants.NO_HOOK});	
+    return;
   }
+
+  var banter = helpers.getRandomBanter(); 
+  var botPayload = {
+    'text': `${userName} slaps ${slapTarget} around a bit with a ${slapEmoji}! ${banter}`,
+    'username': 'slapbot',
+    'channel': channel,
+    'icon_emoji': ':stuck_out_tongue:',
+    'link_names': 1
+  };
+
+  send(botPayload, req.query.callback, function (error, status, body) {
+    if (error) {
+      return next(error);
+    } else if (status !== 200) {
+      return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+    }
+  });
+  
 });
 
 function send (payload, webhook, callback) {
