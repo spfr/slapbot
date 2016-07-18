@@ -21,7 +21,7 @@ app.post('/slap', function(req, res, next) {
       slapEmoji = helpers.validEmojiFormat(items[1]);
     } else if (items.length === 1) {
       slapTarget = items[0];
-      slapEmoji = helpers.DEFAULT_EMOJI;
+      slapEmoji = constants.DEFAULT_EMOJI;
     } else {
       res.status(400).send({error: constants.INVALID_INPUT});  
       return;
