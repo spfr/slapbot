@@ -42,7 +42,7 @@ app.post('/slap', function(req, res, next) {
     'text': `${userName} slaps ${slapTarget} around a bit with a ${slapEmoji}! ${banter}`,
     'username': 'slapbot',
     'channel': channel,
-    'icon_emoji': ':stuck_out_tongue:',
+    'icon_emoji': ':fish:',
     'link_names': 1
   };
 
@@ -51,6 +51,8 @@ app.post('/slap', function(req, res, next) {
       return next(error);
     } else if (status !== 200) {
       return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+    } else {
+      res.send(`Yes Sir, Let me slap ${userName}`);
     }
   });
   
