@@ -52,7 +52,7 @@ app.post('/slap', function(req, res, next) {
     } else if (status !== 200) {
       return next(new Error('Incoming WebHook: ' + status + ' ' + body));
     } else {
-      res.send(`Yes Sir, Let me slap ${userName}`);
+      res.send(`Yes Sir, Let me slap ${slapTarget}`);
     }
   });
   
