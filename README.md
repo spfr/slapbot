@@ -7,7 +7,7 @@ Do you remember that great IRC times when you can just type
 
 ..and it will slap him real good!
 
-Well why not recreate that joyfull momements again in a modern IRC service Slack!
+Well why not recreate that joyfull momements again in a modern IRC service Slack! _Now with some friendly banter included!_
 
 ## Installation
 
@@ -32,6 +32,24 @@ PM2 configuration .json should look like this one:
 }
 ```
 
+## Usage in Slack
+
+Simply type:
+
+```
+/slap Josh
+```
+
+This will tell slapbot to give Josh a big ol' slap with a fish emoji. You can also supply your own emoji by typing:
+
+```
+/slap Josh hot_pepper
+```
+
+In this example, Josh will be slapped by the emoji `:hot_pepper:`. Ouch! 
+
+By default, the bot will also include some banter at the end. Read on to learn how to configure this.
+
 ## Configuration
 
 * Go to Slack services section https://<your_slack_team>.slack.com/services/new. 
@@ -46,5 +64,12 @@ Now you have a working bot with whom you can interact, but it is a private commu
 * Go back to Slash Command and edit the URL to add the token part from above so it should be at the end something like  `http://slapbot.spfr.co/slap?callback=/sadaUSh12/s218jS/ajd123`.
 
 BTW replace `slapbot.spfr.co` with your url, or feel free to use this one.
+
+## Configuring the bot behaviour
+
+* To edit the random banter strings, change the `banterArray` variable in `helpers.js`. 
+* To remove the banter, remove the `banter` variable from the `text` property of `botPayload` in `server.js`.
+* To change the bot name or icon, change the `user_name` and `icon_emoji` property of `botPayload` in `server.js`.
+* To change the default emoji, change the `DEFAULT_EMOJI` variable in `constants.js`.
 
 Congratulations, enjoy slapping!
