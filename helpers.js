@@ -25,7 +25,8 @@ function getRandomBanter() {
 }
 
 function validEmojiFormat(str) {
-  if (str && typeof str === 'string') {
+  const isEmojiRegex = new RegExp('/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/');
+  if (str && typeof str === 'string' && !isEmojiRegex.test(str)) {
     if (str[0] !== ':') {
       str = `:${str}`;
     }

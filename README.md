@@ -43,10 +43,17 @@ Simply type:
 This will tell slapbot to give Josh a big ol' slap with a fish emoji. You can also supply your own emoji by typing:
 
 ```
-/slap Josh hot_pepper
+/slap Josh :hot_pepper:
 ```
 
-In this example, Josh will be slapped by the emoji `:hot_pepper:`. Ouch! 
+In this example, Josh will be slapped by the emoji `:hot_pepper:`. Ouch!
+
+Or yes you can use actual emoji (if on Mac) and type something like:
+
+```
+/slap Josh 🍗
+```
+
 
 By default, the bot will also include some banter at the end. Read on to learn how to configure this.
 
